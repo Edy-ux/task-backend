@@ -17,8 +17,6 @@ class UserController extends Controller {
     }
 
     async list(req, res, next) {
-        console.log('Running');
-
         try {
             const users = await User.find();
 
@@ -61,13 +59,9 @@ class UserController extends Controller {
         try {
             const { id } = req.params;
             if (!id) return;
-            let user = req.body;
 
-            user = await User.findByIdAndUpdate(id, user, () => {});
-            if (user) {
-                user = await User.findById(User.id).populate('responsible');
-                return res.status(200).json(user);
-            }
+            const user = await User.findByIdAndUpdate(id, req.body, () => {});
+            if (user) return responseOk(res, user);
         } catch (error) {
             res.status(400).json({ error: error });
         }
