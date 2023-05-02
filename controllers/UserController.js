@@ -48,7 +48,7 @@ class UserController extends Controller {
             user = await User?.create(user);
             // eslint-disable-next-line spaced-comment
             //User = await User.findById(User.id).populate('responsible');
-            return responseOK(res, user);
+            return res.status(200).json(user);
         } catch (error) {
             res.status(401).json({ msg: error.message });
         }
