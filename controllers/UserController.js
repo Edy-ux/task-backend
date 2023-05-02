@@ -12,7 +12,7 @@ class UserController extends Controller {
     initRoutes() {
         this.router.get(this.path, this.list);
         //this.router.get(`${this.path}/:id`, this.findById);
-        //this.router.post(this.path, this.create);
+        this.router.post(this.path, this.create);
         this.router.put(`${this.path}/:id`, this.edit);
         this.router.delete(`${this.path}/:id`, this.delete);
     }
@@ -41,20 +41,18 @@ class UserController extends Controller {
         }
     }
 
-    /*    async create(req, res, next) {
+    async create(req, res, next) {
         try {
             let user = req.body;
-
             // UserService.checkStatusFinished(User);
             user = await User?.create(user);
             // eslint-disable-next-line spaced-comment
             //User = await User.findById(User.id).populate('responsible');
-
-            // return responseCreate(res, User);
+            return responseOK(res, user);
         } catch (error) {
-            next(new ServerErrorException(error));
+            res.status(401).json({ msg: error.message });
         }
-    } */
+    }
 
     async edit(req, res, next) {
         try {
